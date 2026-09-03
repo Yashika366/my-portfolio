@@ -201,7 +201,6 @@
   .chip:hover { border-color: var(--accent); color: var(--accent); }
 
   /* ── SKILLS ── */
-  
   .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
   .skill-card {
     background: var(--card); border: 1px solid var(--border);
@@ -224,8 +223,25 @@
     font-family: 'DM Mono', monospace; letter-spacing: 0.04em;
   }
 
+  /* ── EXPERIENCE ── */
+  #experience { background: var(--surface); }
+  .exp-item {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 2rem; transition: all 0.3s;
+  }
+  .exp-item:hover { border-color: rgba(192,132,252,0.4); box-shadow: var(--glow); }
+  .exp-header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .exp-role { font-family: 'Playfair Display', serif; font-size: 1.3rem; }
+  .exp-company { color: var(--accent); font-size: 0.95rem; margin-top: 0.2rem; }
+  .exp-date { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--muted); }
+  .exp-bullets { list-style: none; }
+  .exp-bullets li {
+    color: var(--muted); font-size: 0.9rem; padding: 0.35rem 0;
+    padding-left: 1.2rem; position: relative; line-height: 1.6;
+  }
+  .exp-bullets li::before { content: '›'; position: absolute; left: 0; color: var(--accent); }
+
   /* ── PROJECTS ── */
-  #projects { background: var(--surface); }
   .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
   .proj-card {
     background: var(--card); border: 1px solid var(--border);
@@ -248,7 +264,12 @@
     font-family: 'Playfair Display', serif; font-size: 1.4rem;
     margin-bottom: 1rem; line-height: 1.2;
   }
-  .proj-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.25rem; }
+  .proj-link {
+    display: inline-block; font-size: 0.78rem; color: var(--accent);
+    text-decoration: none; margin-bottom: 1rem; font-family: 'DM Mono', monospace;
+    border-bottom: 1px solid transparent; transition: border-color 0.3s;
+  }
+  .proj-link:hover { border-color: var(--accent); }
   .proj-bullets { list-style: none; margin-bottom: 1.5rem; }
   .proj-bullets li {
     color: var(--muted); font-size: 0.85rem; padding: 0.3rem 0;
@@ -265,7 +286,6 @@
   }
 
   /* ── ACHIEVEMENTS ── */
-  
   .ach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
   .ach-section-title {
     font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 1.25rem;
@@ -281,6 +301,12 @@
     padding: 1.25rem; border-radius: 12px; transition: all 0.3s;
   }
   .ach-item:hover { border-color: rgba(251,191,36,0.3); transform: translateX(4px); }
+  .ach-clickable { cursor: pointer; }
+  .ach-clickable:hover { border-color: var(--accent); box-shadow: var(--glow); }
+  .ach-view-hint {
+    margin-top: 0.5rem; font-size: 0.75rem; color: var(--accent);
+    font-family: 'DM Mono', monospace; letter-spacing: 0.03em;
+  }
   .ach-icon {
     width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0;
     background: rgba(251,191,36,0.1); display: flex; align-items: center;
@@ -316,6 +342,7 @@
     font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 0.25rem;
   }
   .edu-school { color: var(--accent); font-size: 0.9rem; margin-bottom: 0.25rem; }
+  .edu-score { color: var(--muted); font-size: 0.85rem; margin-bottom: 0.25rem; }
   .edu-year {
     font-family: 'DM Mono', monospace; font-size: 0.78rem;
     color: var(--muted); letter-spacing: 0.05em;
@@ -347,6 +374,39 @@
   }
   footer span { color: var(--accent); }
 
+  /* ── CERTIFICATE MODAL ── */
+  .cert-modal {
+    display: none; position: fixed; inset: 0; z-index: 1000;
+    background: rgba(5,5,8,0.92); backdrop-filter: blur(8px);
+    align-items: center; justify-content: center; padding: 2rem;
+    animation: fadeIn 0.25s ease;
+  }
+  .cert-modal.open { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .cert-modal-inner {
+    max-width: 900px; width: 100%; max-height: 88vh;
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    animation: fadeUp 0.35s ease both;
+  }
+  .cert-modal-inner img {
+    width: 100%; height: auto; max-height: 75vh; object-fit: contain;
+    border-radius: 12px; border: 1px solid var(--border);
+    box-shadow: 0 20px 80px rgba(0,0,0,0.6), var(--glow);
+    background: #fff;
+  }
+  .cert-modal-caption {
+    color: var(--muted); font-size: 0.9rem; text-align: center;
+  }
+  .cert-modal-close {
+    position: absolute; top: 1.5rem; right: 2rem;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--text); font-size: 1.4rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+  }
+  .cert-modal-close:hover { border-color: var(--accent); color: var(--accent); transform: rotate(90deg); }
+
   /* ── SCROLL ANIMATIONS ── */
   .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -358,6 +418,7 @@
     .about-visual { margin-bottom: 2rem; }
     .ach-grid { grid-template-columns: 1fr; }
     .contact-chips { justify-content: center; }
+    .exp-header { flex-direction: column; }
   }
 </style>
 </head>
@@ -369,6 +430,7 @@
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#achievements">Achievements</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -383,7 +445,7 @@
   <div class="hero-content">
     <div class="hero-badge"><div class="dot"></div> Open to Opportunities</div>
     <h1 class="hero-title">Yashika<br/><span>Keshari</span></h1>
-    <p class="hero-sub">Computer Science student & developer crafting purposeful software — from AI translators to platforms that make a difference.</p>
+    <p class="hero-sub">Computer Science student & Software Development Engineer aspirant — building full-stack platforms, computer vision tools, and AI-assisted applications.</p>
     <div class="hero-cta">
       <a href="#projects" class="btn btn-primary">View My Work</a>
       <a href="#contact" class="btn btn-outline">Get In Touch</a>
@@ -404,15 +466,15 @@
           <div class="avatar-inner">🌸</div>
         </div>
         <div class="stat-pill tl"><strong>180+</strong> LeetCode Problems</div>
-        <div class="stat-pill br"><strong>3rd Year</strong> CS Student</div>
+        <div class="stat-pill br"><strong>Final Year</strong> CS Student</div>
       </div>
       <div class="about-text reveal">
         <div class="section-label">// About Me</div>
         <h2 class="section-title">Turning ideas into <span style="color:var(--accent);font-style:italic">reality</span></h2>
         <div class="section-line"></div>
-        <p>I'm a <strong>3rd-year Computer Science student</strong> at ABES Engineering College, Ghaziabad, passionate about building technology that's meaningful and impactful.</p>
-        <p>From developing <strong>AI-powered tools</strong> to creating platforms that raise awareness on important issues like PCOS/PCOD, I love blending technical skill with real-world purpose.</p>
-        <p>I've completed internships, earned certifications from <strong>IBM, Infosys & more</strong>, and actively participate in hackathons to continuously sharpen my problem-solving edge.</p>
+        <p>I'm a <strong>final-year Computer Science student</strong> at ABES Engineering College, Ghaziabad, actively looking for Software Development Engineer internship opportunities.</p>
+        <p>I build <strong>full-stack platforms</strong> and <strong>computer vision applications</strong> — from a YouTube analytics tool with a rule-based recommendation engine, to a food-label scanner that flags harmful substances from images.</p>
+        <p>I've completed a virtual internship with <strong>IBM</strong> in Generative AI, earned certifications from <strong>Infosys</strong> in Python and Java, and hold a Data Science certification covering Python, data analysis, and ML fundamentals.</p>
         <div class="contact-chips">
           <a href="mailto:yashikakeshariykmzp@gmail.com" class="chip">✉ Email</a>
           <a href="https://linkedin.com/in/yashika-keshari" class="chip" target="_blank">💼 LinkedIn</a>
@@ -437,29 +499,15 @@
         <div class="skill-icon">💻</div>
         <div class="skill-cat">Languages</div>
         <div class="skill-tags">
-          <span class="tag">C/C++</span><span class="tag">Python</span>
-          <span class="tag">JavaScript</span><span class="tag">HTML</span><span class="tag">CSS</span>
+          <span class="tag">C/C++</span><span class="tag">Java</span><span class="tag">Python</span>
+          <span class="tag">JavaScript</span><span class="tag">HTML/CSS</span><span class="tag">SQL</span>
         </div>
       </div>
       <div class="skill-card reveal">
         <div class="skill-icon">⚛️</div>
         <div class="skill-cat">Frameworks</div>
         <div class="skill-tags">
-          <span class="tag">React</span><span class="tag">Node.js</span>
-        </div>
-      </div>
-      <div class="skill-card reveal">
-        <div class="skill-icon">🧠</div>
-        <div class="skill-cat">Core CS</div>
-        <div class="skill-tags">
-          <span class="tag">DSA</span><span class="tag">Problem Solving</span><span class="tag">OOP</span>
-        </div>
-      </div>
-      <div class="skill-card reveal">
-        <div class="skill-icon">🛠</div>
-        <div class="skill-cat">Developer Tools</div>
-        <div class="skill-tags">
-          <span class="tag">Git</span><span class="tag">VS Code</span><span class="tag">Eclipse</span>
+          <span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Flask</span><span class="tag">FastAPI</span>
         </div>
       </div>
       <div class="skill-card reveal">
@@ -467,15 +515,54 @@
         <div class="skill-cat">Libraries</div>
         <div class="skill-tags">
           <span class="tag">pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span>
+          <span class="tag">scikit-learn</span><span class="tag">OpenCV</span>
         </div>
       </div>
       <div class="skill-card reveal">
-        <div class="skill-icon">🤖</div>
-        <div class="skill-cat">AI / Data</div>
+        <div class="skill-icon">🗄️</div>
+        <div class="skill-cat">Databases</div>
         <div class="skill-tags">
-          <span class="tag">Prompt Engineering</span><span class="tag">NLP</span><span class="tag">Data Science</span>
+          <span class="tag">MongoDB</span>
         </div>
       </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🧠</div>
+        <div class="skill-cat">Core Concepts</div>
+        <div class="skill-tags">
+          <span class="tag">DSA</span><span class="tag">OOP</span><span class="tag">DBMS</span><span class="tag">Operating Systems</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon">🛠</div>
+        <div class="skill-cat">Developer Tools</div>
+        <div class="skill-tags">
+          <span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">VS Code</span><span class="tag">Eclipse</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">// Where I've Worked</div>
+      <h2 class="section-title">Experience</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Virtual Internship</div>
+          <div class="exp-company">IBM · Remote</div>
+        </div>
+        <div class="exp-date">Jul 2025 – Aug 2025</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Built a context-aware AI translation application in the Generative AI domain, using prompt-engineering techniques across 5+ language pairs to preserve semantic meaning.</li>
+        <li>Earned a performance-based stipend for consistent performance and successful completion of program milestones.</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -491,41 +578,53 @@
     <div class="projects-grid">
       <div class="proj-card reveal">
         <div class="proj-num">01 / Project</div>
-        <div class="proj-name">Her Website 🌸</div>
-        <div class="proj-desc">A platform dedicated to raising awareness about PCOS/PCOD, combining accessible design with meaningful health education.</div>
+        <div class="proj-name">Social Sage 📊</div>
+        <a href="https://github.com/Yashika366/Social_Sage" class="proj-link" target="_blank">GitHub →</a>
         <ul class="proj-bullets">
-          <li>Raised awareness about PCOS/PCOD with educational resources</li>
-          <li>Designed accessible, user-friendly UI</li>
-          <li>Focused on clean design &amp; inclusivity</li>
+          <li>Full-stack YouTube channel analytics platform with JWT-based authentication and MongoDB upsert caching, cutting redundant API calls by an estimated 60%</li>
+          <li>Rule-based recommendation engine computing engagement rate, views-to-subscriber ratio, and a composite growth score across 3+ metrics</li>
+          <li>Modular FastAPI backend and React 19 + Tailwind frontend</li>
         </ul>
         <div class="proj-tag-row">
-          <span class="proj-tag">HTML/CSS</span><span class="proj-tag">UI Design</span><span class="proj-tag">Accessibility</span>
+          <span class="proj-tag">Python</span><span class="proj-tag">FastAPI</span><span class="proj-tag">React</span><span class="proj-tag">MongoDB</span><span class="proj-tag">YouTube Data API v3</span>
         </div>
       </div>
       <div class="proj-card reveal">
         <div class="proj-num">02 / Project</div>
-        <div class="proj-name">AI-Powered Translator 🌐</div>
-        <div class="proj-desc">A generative AI translator leveraging Python and prompt engineering for contextual, accurate language translation.</div>
+        <div class="proj-name">SafeHarvest AI 🥗</div>
+        <a href="https://github.com/Yashika366/safeHarvest-AI" class="proj-link" target="_blank">GitHub →</a>
         <ul class="proj-bullets">
-          <li>Built with Python &amp; Generative AI</li>
-          <li>Implemented NLP for contextual translation</li>
-          <li>Deployed on GitHub with HTML/CSS frontend</li>
+          <li>Computer-vision application that analyzes food product images to flag potentially harmful substances, helping users make informed purchasing decisions in under 3 seconds per scan</li>
+          <li>Image processing and analysis pipelines using OpenCV for ingredient/label detection</li>
+          <li>Flask backend with a React frontend</li>
         </ul>
         <div class="proj-tag-row">
-          <span class="proj-tag">Python</span><span class="proj-tag">Gen AI</span><span class="proj-tag">NLP</span><span class="proj-tag">HTML/CSS</span>
+          <span class="proj-tag">Python</span><span class="proj-tag">Flask</span><span class="proj-tag">OpenCV</span><span class="proj-tag">React</span>
         </div>
       </div>
       <div class="proj-card reveal">
         <div class="proj-num">03 / Project</div>
-        <div class="proj-name">Skill Barter System 🤝</div>
-        <div class="proj-desc">A platform enabling users to exchange skills and services without money — a modern take on the barter economy.</div>
+        <div class="proj-name">HER Website &amp; Skill-Based Barter System 🤝</div>
+        <a href="https://skill-swapp.onrender.com" class="proj-link" target="_blank">Live Demo →</a>
         <ul class="proj-bullets">
-          <li>User registration &amp; skill listing features</li>
-          <li>Smart matching based on complementary skills</li>
-          <li>Collaborated in team to ship end-to-end features</li>
+          <li>Full-stack skill-exchange/barter platform built collaboratively with a team</li>
+          <li>Developed 10+ Node.js/Express REST API endpoints handling the HTTP request/response cycle, along with MongoDB data models</li>
+          <li>Co-designed a request/approval workflow for skill trades and deployed on Render with environment-based configuration</li>
         </ul>
         <div class="proj-tag-row">
-          <span class="proj-tag">Full-Stack</span><span class="proj-tag">Matching Algorithm</span><span class="proj-tag">Team Project</span>
+          <span class="proj-tag">Node.js</span><span class="proj-tag">Express</span><span class="proj-tag">MongoDB</span><span class="proj-tag">React</span>
+        </div>
+      </div>
+      <div class="proj-card reveal">
+        <div class="proj-num">04 / Project</div>
+        <div class="proj-name">AI-Powered Translator 🌐</div>
+        <a href="https://github.com/Yashika366/AI-translator" class="proj-link" target="_blank">GitHub →</a>
+        <ul class="proj-bullets">
+          <li>Context-aware AI translation application built during the IBM Generative AI internship</li>
+          <li>Used prompt-engineering techniques across 5+ language pairs to preserve semantic meaning</li>
+        </ul>
+        <div class="proj-tag-row">
+          <span class="proj-tag">Python</span><span class="proj-tag">Gen AI</span><span class="proj-tag">Prompt Engineering</span>
         </div>
       </div>
     </div>
@@ -544,31 +643,45 @@
       <div>
         <div class="ach-section-title">🏆 Achievements</div>
         <div class="ach-item">
-          <div class="ach-icon">🏢</div>
-          <div class="ach-text">Completed <strong style="color:var(--text)">IBM Virtual Internship</strong> and earned a performance-based stipend for consistent delivery and task completion.</div>
-        </div>
-        <div class="ach-item">
           <div class="ach-icon">⚡</div>
-          <div class="ach-text">Solved <strong style="color:var(--text)">180+ DSA problems</strong> on LeetCode, demonstrating consistent problem-solving and coding efficiency.</div>
+          <div class="ach-text">Solved <strong style="color:var(--text)">180+ Data Structures and Algorithms problems</strong> on LeetCode, covering core structures (stacks, queues, linked lists, binary search) and graph algorithms (BFS/DFS, topological sort, cycle detection, bipartite checking).</div>
+        </div>
+        <div class="ach-item ach-clickable" onclick="openCertModal('assets/ibm-certificate.png', 'IBM Virtual Internship Certificate')">
+          <div class="ach-icon">🏢</div>
+          <div class="ach-text">Completed <strong style="color:var(--text)">IBM Virtual Internship</strong> and earned a performance-based stipend for consistent delivery and task completion.
+            <div class="ach-view-hint">🔍 Click to view certificate</div>
+          </div>
         </div>
         <div class="ach-item">
           <div class="ach-icon">🚀</div>
-          <div class="ach-text">Actively participated in <strong style="color:var(--text)">hackathons &amp; coding competitions</strong>, showcasing teamwork and rapid prototyping skills.</div>
+          <div class="ach-text">Actively participated in <strong style="color:var(--text)">hackathons &amp; coding competitions</strong>, demonstrating teamwork, adaptability, and problem-solving under time constraints.</div>
+        </div>
+        <div class="ach-item ach-clickable" onclick="openCertModal('assets/logitech-certificate.png', 'Certificate of Excellence — Women Who Master Hackathon 2026')">
+          <div class="ach-icon">🏅</div>
+          <div class="ach-text">Received a <strong style="color:var(--text)">Certificate of Excellence</strong> for reaching the Zonal Round of the <strong style="color:var(--text)">Women Who Master Hackathon 2026</strong> — an all-women national initiative by Logitech &amp; Aspire For Her, and a Guinness World Records title-holder as the largest women-only generative AI hackathon.
+            <div class="ach-view-hint">🔍 Click to view certificate</div>
+          </div>
         </div>
       </div>
       <div>
         <div class="ach-section-title">🎓 Certifications</div>
-        <div class="cert-item">
-          <div class="cert-icon">📊</div>
-          <div class="ach-text"><strong style="color:var(--text)">Data Science</strong> – Code with Harry (Paid): Python, data analysis, and machine learning fundamentals.</div>
-        </div>
-        <div class="cert-item">
+        <div class="cert-item ach-clickable" onclick="openCertModal('assets/python-certificate.png', 'Python Programming Certification — Infosys')">
           <div class="cert-icon">🐍</div>
-          <div class="ach-text"><strong style="color:var(--text)">Python Programming</strong> – Infosys: Core programming concepts and structured problem solving.</div>
+          <div class="ach-text"><strong style="color:var(--text)">Python Programming</strong> – Infosys
+            <div class="ach-view-hint">🔍 Click to view certificate</div>
+          </div>
         </div>
-        <div class="cert-item">
+        <div class="cert-item ach-clickable" onclick="openCertModal('assets/java-certificate.png', 'Java Programming Certification — Infosys')">
           <div class="cert-icon">☕</div>
-          <div class="ach-text"><strong style="color:var(--text)">Java Programming</strong> – Infosys: Object-oriented programming and application development.</div>
+          <div class="ach-text"><strong style="color:var(--text)">Java Programming</strong> – Infosys
+            <div class="ach-view-hint">🔍 Click to view certificate</div>
+          </div>
+        </div>
+        <div class="cert-item ach-clickable" onclick="openCertModal('assets/datascience-certificate.png', 'Data Science Certification — CodeWithHarry')">
+          <div class="cert-icon">📊</div>
+          <div class="ach-text"><strong style="color:var(--text)">Data Science Certification</strong> – CodeWithHarry: Python, data analysis, and introductory machine learning concepts.
+            <div class="ach-view-hint">🔍 Click to view certificate</div>
+          </div>
         </div>
       </div>
     </div>
@@ -586,13 +699,21 @@
     <div class="edu-timeline reveal">
       <div class="edu-item">
         <div class="edu-degree">B.Tech in Computer Science</div>
-        <div class="edu-school">ABES Engineering College, Ghaziabad, UP</div>
-        <div class="edu-year">2023 – Present &nbsp;·&nbsp; 3rd Year</div>
+        <div class="edu-school">ABES Engineering College, Ghaziabad, Uttar Pradesh</div>
+        <div class="edu-score">CGPA: 8.31/10</div>
+        <div class="edu-year">2023 – 2027</div>
       </div>
       <div class="edu-item">
         <div class="edu-degree">Higher Secondary Education (CBSE)</div>
-        <div class="edu-school">Little Flower House, Varanasi, UP</div>
+        <div class="edu-school">Little Flower House, Varanasi, Uttar Pradesh</div>
+        <div class="edu-score">87.2%</div>
         <div class="edu-year">2020 – 2022</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-degree">Secondary Education (CBSE)</div>
+        <div class="edu-school">Ambika Devi High School, Mirzapur, Uttar Pradesh</div>
+        <div class="edu-score">87.4%</div>
+        <div class="edu-year">2018 – 2020</div>
       </div>
     </div>
   </div>
@@ -607,7 +728,7 @@
       <div class="section-line" style="margin:0 auto 3rem"></div>
     </div>
     <div class="contact-card reveal">
-      <p>I'm actively looking for internships and full-time opportunities. Whether you have a project in mind or just want to say hi — my inbox is always open!</p>
+      <p>I'm actively looking for SDE internship opportunities. Whether you have a project in mind or just want to say hi — my inbox is always open!</p>
       <div class="contact-links">
         <a href="mailto:yashikakeshariykmzp@gmail.com" class="contact-link">✉ yashikakeshariykmzp@gmail.com</a>
         <a href="https://linkedin.com/in/yashika-keshari" class="contact-link" target="_blank">💼 LinkedIn</a>
@@ -618,12 +739,36 @@
   </div>
 </section>
 
+<!-- CERTIFICATE MODAL -->
+<div class="cert-modal" id="certModal" onclick="if(event.target===this) closeCertModal()">
+  <div class="cert-modal-close" onclick="closeCertModal()">✕</div>
+  <div class="cert-modal-inner">
+    <img id="certModalImg" src="" alt="Certificate" />
+    <div class="cert-modal-caption" id="certModalCaption"></div>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
-  <p>Designed &amp; built with ♥ by <span>Yashika Keshari</span> · 2024</p>
+  <p>Designed &amp; built with ♥ by <span>Yashika Keshari</span> · 2026</p>
 </footer>
 
 <script>
+  // Certificate modal
+  function openCertModal(src, caption) {
+    document.getElementById('certModalImg').src = src;
+    document.getElementById('certModalCaption').textContent = caption || '';
+    document.getElementById('certModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCertModal() {
+    document.getElementById('certModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeCertModal();
+  });
+
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
